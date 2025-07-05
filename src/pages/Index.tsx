@@ -6,6 +6,7 @@ import { Calendar, MapPin, Heart, Users, Gift, Mail } from "lucide-react";
 import RSVPForm from "@/components/RSVPForm";
 import PhotoGallery from "@/components/PhotoGallery";
 import ContactInfo from "@/components/ContactInfo";
+import CountdownTimer from "@/components/CountdownTimer";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
@@ -47,12 +48,47 @@ const Index = () => {
       <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-pink-100/20 to-green-100/20"></div>
         
-        {/* Decorative florals */}
-        <div className="absolute top-10 left-10 w-32 h-32 opacity-20">
-          <img src="/lovable-uploads/5a6cf97a-582d-4a80-9476-89f831fd01a2.png" alt="" className="w-full h-full object-cover" />
-        </div>
-        <div className="absolute bottom-10 right-10 w-40 h-40 opacity-20 transform rotate-180">
-          <img src="/lovable-uploads/5a6cf97a-582d-4a80-9476-89f831fd01a2.png" alt="" className="w-full h-full object-cover" />
+        {/* Beautiful floral background elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          {/* Top left flowers */}
+          <div className="absolute top-10 left-10 w-48 h-48 opacity-10">
+            <div className="w-full h-full bg-gradient-to-br from-pink-300 to-pink-400 rounded-full blur-xl"></div>
+          </div>
+          <div className="absolute top-20 left-20 w-32 h-32 opacity-15">
+            <div className="w-full h-full bg-gradient-to-br from-green-300 to-green-400 rounded-full blur-lg"></div>
+          </div>
+          
+          {/* Top right flowers */}
+          <div className="absolute top-16 right-16 w-40 h-40 opacity-12">
+            <div className="w-full h-full bg-gradient-to-br from-pink-200 to-pink-300 rounded-full blur-xl"></div>
+          </div>
+          <div className="absolute top-32 right-32 w-24 h-24 opacity-20">
+            <div className="w-full h-full bg-gradient-to-br from-green-200 to-green-300 rounded-full blur-lg"></div>
+          </div>
+          
+          {/* Bottom left flowers */}
+          <div className="absolute bottom-20 left-16 w-56 h-56 opacity-8">
+            <div className="w-full h-full bg-gradient-to-br from-pink-400 to-pink-500 rounded-full blur-2xl"></div>
+          </div>
+          <div className="absolute bottom-32 left-32 w-36 h-36 opacity-15">
+            <div className="w-full h-full bg-gradient-to-br from-green-400 to-green-500 rounded-full blur-xl"></div>
+          </div>
+          
+          {/* Bottom right flowers */}
+          <div className="absolute bottom-10 right-10 w-44 h-44 opacity-10">
+            <div className="w-full h-full bg-gradient-to-br from-pink-300 to-pink-400 rounded-full blur-xl"></div>
+          </div>
+          <div className="absolute bottom-28 right-28 w-28 h-28 opacity-18">
+            <div className="w-full h-full bg-gradient-to-br from-green-300 to-green-400 rounded-full blur-lg"></div>
+          </div>
+          
+          {/* Scattered smaller floral elements */}
+          <div className="absolute top-1/3 left-1/4 w-20 h-20 opacity-12">
+            <div className="w-full h-full bg-gradient-to-br from-pink-200 to-pink-300 rounded-full blur-md"></div>
+          </div>
+          <div className="absolute top-2/3 right-1/4 w-16 h-16 opacity-15">
+            <div className="w-full h-full bg-gradient-to-br from-green-200 to-green-300 rounded-full blur-md"></div>
+          </div>
         </div>
 
         <div className="text-center z-10 px-4">
@@ -82,11 +118,11 @@ const Index = () => {
           <p className="text-xl text-stone-600 mb-2 italic">precas</p>
           
           <p className="text-lg text-stone-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Priecāsimies svinet mūsu mīlestības<br />
+            Priecāsimies svelet mūsu mīlestības<br />
             svētkus kopā ar Jums!
           </p>
 
-          <div className="flex items-center justify-center space-x-8 mb-12">
+          <div className="flex items-center justify-center space-x-8 mb-8">
             <div className="text-center">
               <div className="text-sm text-stone-500 uppercase tracking-wider mb-1">Sestdiena</div>
               <div className="text-5xl font-light text-stone-700">19.</div>
@@ -97,9 +133,12 @@ const Index = () => {
             </div>
           </div>
 
+          {/* Countdown Timer */}
+          <CountdownTimer />
+
           <Button 
             onClick={() => scrollToSection("details")}
-            className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105"
+            className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 mt-8"
           >
             Uzzināt vairāk
           </Button>
