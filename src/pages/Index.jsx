@@ -12,7 +12,7 @@ import ZigZagSection from "@/components/ZigZagSection";
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
 
-  const scrollToSection = (section: string) => {
+  const scrollToSection = (section) => {
     setActiveSection(section);
     const element = document.getElementById(section);
     element?.scrollIntoView({ behavior: "smooth" });
