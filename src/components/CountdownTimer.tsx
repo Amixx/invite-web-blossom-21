@@ -34,47 +34,49 @@ const CountdownTimer = () => {
 
   return (
     <div className="mb-8 sm:mb-12 px-4">
-      <p className="text-base sm:text-lg text-stone-600 mb-4 sm:mb-6 italic text-center">Līdz mūsu īpašajai dienai:</p>
+      <p className="text-base sm:text-lg text-white/90 mb-4 sm:mb-6 italic text-center drop-shadow">
+        Līdz mūsu īpašajai dienai:
+      </p>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 max-w-sm sm:max-w-md mx-auto">
-        <Card className="border-pink-200 bg-white/80 backdrop-blur-sm shadow-lg">
+        <Card className="border-white/20 bg-white/10 backdrop-blur-md shadow-lg">
           <CardContent className="p-2 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl md:text-3xl font-light text-stone-700 mb-1">
+            <div className="text-xl sm:text-2xl md:text-3xl font-light text-white mb-1 drop-shadow">
               {timeLeft.days}
             </div>
-            <div className="text-xs text-stone-500 uppercase tracking-wider">
+            <div className="text-xs text-white/80 uppercase tracking-wider">
               Dienas
             </div>
           </CardContent>
         </Card>
         
-        <Card className="border-green-200 bg-white/80 backdrop-blur-sm shadow-lg">
+        <Card className="border-white/20 bg-white/10 backdrop-blur-md shadow-lg">
           <CardContent className="p-2 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl md:text-3xl font-light text-stone-700 mb-1">
+            <div className="text-xl sm:text-2xl md:text-3xl font-light text-white mb-1 drop-shadow">
               {timeLeft.hours}
             </div>
-            <div className="text-xs text-stone-500 uppercase tracking-wider">
+            <div className="text-xs text-white/80 uppercase tracking-wider">
               Stundas
             </div>
           </CardContent>
         </Card>
         
-        <Card className="border-pink-200 bg-white/80 backdrop-blur-sm shadow-lg">
+        <Card className="border-white/20 bg-white/10 backdrop-blur-md shadow-lg">
           <CardContent className="p-2 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl md:text-3xl font-light text-stone-700 mb-1">
+            <div className="text-xl sm:text-2xl md:text-3xl font-light text-white mb-1 drop-shadow">
               {timeLeft.minutes}
             </div>
-            <div className="text-xs text-stone-500 uppercase tracking-wider">
+            <div className="text-xs text-white/80 uppercase tracking-wider">
               Minūtes
             </div>
           </CardContent>
         </Card>
         
-        <Card className="border-green-200 bg-white/80 backdrop-blur-sm shadow-lg">
+        <Card className="border-white/20 bg-white/10 backdrop-blur-md shadow-lg">
           <CardContent className="p-2 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl md:text-3xl font-light text-stone-700 mb-1">
+            <div className="text-xl sm:text-2xl md:text-3xl font-light text-white mb-1 drop-shadow">
               {timeLeft.seconds}
             </div>
-            <div className="text-xs text-stone-500 uppercase tracking-wider">
+            <div className="text-xs text-white/80 uppercase tracking-wider">
               Sekundes
             </div>
           </CardContent>
