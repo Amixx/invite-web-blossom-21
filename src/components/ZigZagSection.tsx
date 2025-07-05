@@ -1,7 +1,16 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 
-const ZigZagSection = ({ id, title, content, image, position, index }) => {
+interface ZigZagSectionProps {
+  id: string;
+  title: string;
+  content: React.ReactNode;
+  image: string;
+  position: "left" | "right";
+  index: number;
+}
+
+const ZigZagSection = ({ id, title, content, image, position, index }: ZigZagSectionProps) => {
   const isEven = index % 2 === 0;
   const bgColor = isEven ? "bg-white" : "bg-gradient-to-r from-pink-50 to-green-50";
 
