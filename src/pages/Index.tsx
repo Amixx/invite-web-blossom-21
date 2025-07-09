@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Heart, Users, Gift, Mail } from "lucide-react";
+import { Calendar, Heart, Gift, Mail } from "lucide-react";
 import PhotoGallery from "@/components/PhotoGallery";
 import ContactInfo from "@/components/ContactInfo";
 import CountdownTimer from "@/components/CountdownTimer";
@@ -8,12 +6,8 @@ import HeroCarousel from "@/components/HeroCarousel";
 import ZigZagSection from "@/components/ZigZagSection";
 
 const Index = () => {
-  const [activeSection, setActiveSection] = useState("home");
-
   const scrollToSection = (section: string) => {
-    setActiveSection(section);
-    const element = document.getElementById(section);
-    element?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
   };
 
   const zigzagSections = [
@@ -32,18 +26,17 @@ const Index = () => {
       content: (
         <div>
           <h4 className="text-lg font-medium mb-3">
-            Rīgas Svētā Pāvila Baznīca
+            Rīgas Svētā Pāvila baznīca
           </h4>
           <p className="mb-3">Augusta Deglava iela 1, Rīga</p>
-          <p className="mb-3">Sestdiena, 19. Jūlijs 2025, plkst. 15:00</p>
+          <p className="mb-3">Sestdiena, 2025. gada 19. jūlijs, plkst. 15:00</p>
           <p className="text-sm text-stone-600">
             Lūdzam ierasties laicīgi. Baznīca atrodas Rīgas centrā, viegli
             pieejama ar sabiedrisko transportu.
           </p>
         </div>
       ),
-      image:
-        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&h=400&fit=crop",
+      image: "/pavila-baznica.jpg",
       position: "right",
     },
     {
@@ -86,21 +79,22 @@ const Index = () => {
     {
       id: "accommodation",
       title: "Naktsmītnes",
-      content: (
-        <div>
-          <p className="mb-3">
-            Viesiem no tālākām vietām ieteicam šīs viesnīcas Rīgas centrā:
-          </p>
-          <ul className="list-disc list-inside space-y-1 text-sm">
-            <li>Hotel Bergs - 5 min no baznīcas</li>
-            <li>Radisson Blu Elizabete - 10 min no baznīcas</li>
-            <li>Hotel Roma - budžeta variants, 15 min</li>
-          </ul>
-          <p className="text-sm text-stone-600 mt-3">
-            Ja nepieciešama palīdzība ar rezervāciju, sazinieties ar mums!
-          </p>
-        </div>
-      ),
+      // TODO: fix the text or remove the whole section
+      // content: (
+      //   <div>
+      //     <p className="mb-3">
+      //       Viesiem no tālākām vietām ieteicam šīs viesnīcas Rīgas centrā:
+      //     </p>
+      //     <ul className="list-disc list-inside space-y-1 text-sm">
+      //       <li>Hotel Bergs - 5 min no baznīcas</li>
+      //       <li>Radisson Blu Elizabete - 10 min no baznīcas</li>
+      //       <li>Hotel Roma - budžeta variants, 15 min</li>
+      //     </ul>
+      //     <p className="text-sm text-stone-600 mt-3">
+      //       Ja nepieciešama palīdzība ar rezervāciju, sazinieties ar mums!
+      //     </p>
+      //   </div>
+      // ),
       image:
         "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?w=600&h=400&fit=crop",
       position: "left",
@@ -118,7 +112,6 @@ const Index = () => {
               { id: "story", label: "Stāsts", icon: Heart },
               { id: "ceremony", label: "Ceremonija", icon: Calendar },
               { id: "afterparty", label: "Svinības", icon: Gift },
-              { id: "rsvp", label: "RSVP", icon: Users },
               { id: "gallery", label: "Galerija", icon: Gift },
               { id: "contact", label: "Kontakti", icon: Mail },
             ].map(({ id, label, icon: Icon }) => (
@@ -140,7 +133,7 @@ const Index = () => {
       {/* Hero Section with Carousel */}
       <section
         id="home"
-        className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16 sm:pt-0"
+        className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24"
       >
         <HeroCarousel />
 
@@ -178,39 +171,21 @@ const Index = () => {
           </p>
 
           <p className="text-base sm:text-lg text-white/80 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-4 drop-shadow">
-            Priecāsimies svelet mūsu mīlestības
+            Priecāsimies svinēt mūsu mīlestības
             <br className="hidden sm:block" />
             svētkus kopā ar Jums!
           </p>
 
-          <div className="flex items-center justify-center space-x-6 sm:space-x-8 mb-6 sm:mb-8">
-            <div className="text-center">
-              <div className="text-xs sm:text-sm text-white/70 uppercase tracking-wider mb-1">
-                Sestdiena
-              </div>
-              <div className="text-4xl sm:text-5xl font-light text-white drop-shadow">
-                19.
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-xs sm:text-sm text-white/70 uppercase tracking-wider mb-1">
-                Jūlijs
-              </div>
-              <div className="text-xl sm:text-2xl text-white/90 drop-shadow">
-                2025
-              </div>
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="text-lg sm:text-xl text-white/90 mb-2 drop-shadow">
+              Sestdiena, 2025. gada{" "}
+              <span className="text-3xl sm:text-4xl font-light">19.</span>{" "}
+              jūlijs
             </div>
           </div>
 
           {/* Countdown Timer */}
           <CountdownTimer />
-
-          <Button
-            onClick={() => scrollToSection("story")}
-            className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-6 sm:px-8 py-2 sm:py-3 rounded-full transition-all duration-300 transform hover:scale-105 mt-6 sm:mt-8 text-sm sm:text-base backdrop-blur-sm"
-          >
-            Uzzināt vairāk
-          </Button>
         </div>
       </section>
 

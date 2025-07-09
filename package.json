@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
-    "lint": "eslint .",
+    "eslint:check": "eslint .",
+    "eslint:fix": "eslint . --fix",
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist"
   },
