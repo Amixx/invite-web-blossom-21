@@ -1,18 +1,24 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 
-interface ZigZagSectionProps {
+const ZigZagSection = ({
+  id,
+  title,
+  content,
+  image,
+  position,
+  index,
+}: {
   id: string;
   title: string;
   content: React.ReactNode;
   image: string;
   position: "left" | "right";
   index: number;
-}
-
-const ZigZagSection = ({ id, title, content, image, position, index }: ZigZagSectionProps) => {
+}) => {
   const isEven = index % 2 === 0;
-  const bgColor = isEven ? "bg-white" : "bg-gradient-to-r from-pink-50 to-green-50";
+  const bgColor = isEven
+    ? "bg-white"
+    : "bg-gradient-to-r from-pink-50 to-green-50";
 
   return (
     <section id={id} className={`py-12 sm:py-20 px-4 ${bgColor}`}>
@@ -21,8 +27,8 @@ const ZigZagSection = ({ id, title, content, image, position, index }: ZigZagSec
         <div className="lg:hidden">
           <Card className="shadow-xl border-0 overflow-hidden">
             <div className="aspect-[16/10] overflow-hidden">
-              <img 
-                src={image} 
+              <img
+                src={image}
                 alt={title}
                 className="w-full h-full object-cover"
               />
@@ -32,7 +38,7 @@ const ZigZagSection = ({ id, title, content, image, position, index }: ZigZagSec
                 {title}
               </h3>
               <div className="text-stone-600 leading-relaxed">
-                {typeof content === 'string' ? <p>{content}</p> : content}
+                {typeof content === "string" ? <p>{content}</p> : content}
               </div>
             </CardContent>
           </Card>
@@ -40,12 +46,16 @@ const ZigZagSection = ({ id, title, content, image, position, index }: ZigZagSec
 
         {/* Desktop Layout - Zig-Zag */}
         <div className="hidden lg:block">
-          <div className={`flex items-center gap-16 ${position === 'right' ? 'flex-row-reverse' : ''}`}>
+          <div
+            className={`flex items-center gap-16 ${
+              position === "right" ? "flex-row-reverse" : ""
+            }`}
+          >
             {/* Image Side */}
             <div className="flex-1">
               <div className="aspect-[4/3] overflow-hidden rounded-lg shadow-xl">
-                <img 
-                  src={image} 
+                <img
+                  src={image}
                   alt={title}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -59,7 +69,7 @@ const ZigZagSection = ({ id, title, content, image, position, index }: ZigZagSec
                   {title}
                 </h3>
                 <div className="text-stone-600 text-lg leading-relaxed">
-                  {typeof content === 'string' ? <p>{content}</p> : content}
+                  {typeof content === "string" ? <p>{content}</p> : content}
                 </div>
               </div>
             </div>

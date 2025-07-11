@@ -18,17 +18,15 @@ export type NavItem = {
   action: () => void;
 };
 
-interface NavigationProps {
-  items?: NavItem[];
-  showBackButton?: boolean;
-  backButtonLabel?: string;
-}
-
 const Navigation = ({
   items,
   showBackButton = false,
   backButtonLabel = "Atpakaļ",
-}: NavigationProps) => {
+}: {
+  items?: NavItem[];
+  showBackButton?: boolean;
+  backButtonLabel?: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
