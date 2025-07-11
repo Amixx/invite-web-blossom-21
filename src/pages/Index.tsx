@@ -1,14 +1,13 @@
-import { Calendar, Heart, Gift, Mail } from "lucide-react";
+import { Heart } from "lucide-react";
 import PhotoGallery from "@/components/PhotoGallery";
 import ContactInfo from "@/components/ContactInfo";
 import CountdownTimer from "@/components/CountdownTimer";
 import HeroCarousel from "@/components/HeroCarousel";
 import ZigZagSection from "@/components/ZigZagSection";
+import Layout from "@/components/Layout";
+import Navigation from "@/components/Navigation";
 
 const Index = () => {
-  const scrollToSection = (section: string) => {
-    document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
-  };
 
   const zigzagSections = [
     {
@@ -102,42 +101,17 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 via-white to-green-50">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-pink-100">
-        <div className="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
-          <div className="flex justify-center space-x-3 sm:space-x-8 overflow-x-auto">
-            {[
-              { id: "home", label: "Sākums", icon: Heart },
-              { id: "story", label: "Stāsts", icon: Heart },
-              { id: "ceremony", label: "Ceremonija", icon: Calendar },
-              { id: "afterparty", label: "Svinības", icon: Gift },
-              { id: "gallery", label: "Galerija", icon: Gift },
-              { id: "contact", label: "Kontakti", icon: Mail },
-            ].map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                onClick={() => scrollToSection(id)}
-                className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-2 text-stone-600 hover:text-pink-600 transition-colors duration-300 min-w-0 flex-shrink-0"
-              >
-                <Icon size={16} />
-                <span className="text-xs sm:text-sm font-medium whitespace-nowrap">
-                  {label}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </nav>
+    <Layout>
+      <Navigation />
 
       {/* Hero Section with Carousel */}
       <section
         id="home"
-        className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24"
+        className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16 sm:pt-24"
       >
         <HeroCarousel />
 
-        <div className="text-center z-10 px-4 relative">
+        <div className="text-center z-10 px-2 sm:px-4 relative">
           {/* Heart with cross symbol */}
           <div className="mb-6 sm:mb-8 flex justify-center">
             <div className="relative">
@@ -170,7 +144,7 @@ const Index = () => {
             precas
           </p>
 
-          <p className="text-base sm:text-lg text-white/80 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-4 drop-shadow">
+          <p className="text-base sm:text-lg text-white/80 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-2 sm:px-4 drop-shadow">
             Priecāsimies svinēt mūsu mīlestības
             <br className="hidden sm:block" />
             svētkus kopā ar Jums!
@@ -205,10 +179,10 @@ const Index = () => {
       {/* Photo Gallery */}
       <section
         id="gallery"
-        className="py-12 sm:py-20 px-4 bg-gradient-to-b from-green-50 to-pink-50"
+        className="py-8 sm:py-20 px-2 sm:px-4 bg-gradient-to-b from-green-50 to-pink-50"
       >
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-3xl sm:text-4xl font-light text-center text-stone-700 mb-12 sm:mb-16 tracking-wide">
+          <h2 className="text-3xl sm:text-4xl font-light text-center text-stone-700 mb-8 sm:mb-16 tracking-wide">
             Mūsu Galerija
           </h2>
           <PhotoGallery />
@@ -216,27 +190,16 @@ const Index = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-12 sm:py-20 px-4">
+      <section id="contact" className="py-8 sm:py-20 px-2 sm:px-4">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="text-3xl sm:text-4xl font-light text-center text-stone-700 mb-12 sm:mb-16 tracking-wide">
+          <h2 className="text-3xl sm:text-4xl font-light text-center text-stone-700 mb-8 sm:mb-16 tracking-wide">
             Kontaktinformācija
           </h2>
           <ContactInfo />
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 sm:py-12 bg-stone-100 text-center">
-        <div className="container mx-auto px-4">
-          <Heart
-            className="mx-auto mb-4 text-pink-500 fill-pink-200"
-            size={32}
-          />
-          <p className="text-stone-600 mb-2">Matīss & Agnese</p>
-          <p className="text-stone-500">19. Jūlijs 2025</p>
-        </div>
-      </footer>
-    </div>
+    </Layout>
   );
 };
 
