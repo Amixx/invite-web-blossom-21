@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { getLatvianPlural } from "@/utils/latvian";
 
 const SECOND_MS = 1000;
 const MINUTE_MS = SECOND_MS * 60;
@@ -14,13 +15,7 @@ const CountdownTimer = () => {
     seconds: 0,
   });
 
-  const getLatvianPlural = (
-    number: number,
-    singular: string,
-    plural: string
-  ) => {
-    return number === 1 ? singular : plural;
-  };
+
 
   useEffect(() => {
     const weddingDate = new Date("2025-07-19T15:00:00").getTime();
