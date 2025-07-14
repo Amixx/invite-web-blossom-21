@@ -8,7 +8,6 @@ import Layout from "@/components/Layout";
 import Navigation from "@/components/Navigation";
 
 const Index = () => {
-
   const zigzagSections = [
     {
       id: "story",
@@ -163,6 +162,23 @@ const Index = () => {
         </div>
       </section>
 
+      <div>
+        {/* copilot - add some text and a button to the wishes page (/novēlējumi) */}
+        <section className="py-8 sm:py-20 px-2 sm:px-4 bg-gradient-to-b from-pink-50 to-yellow-50">
+          <div className="container mx-auto max-w-6xl text-center">
+            <h2 className="text-3xl sm:text-4xl font-light text-stone-700 mb-6 sm:mb-8 tracking-wide">
+              Vai Tev ir ko mums novēlēt?
+            </h2>
+            <a
+              href="/novelejumi"
+              className="inline-block bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-6 rounded-full transition-colors duration-300"
+            >
+              Uz novēlējumiem
+            </a>
+          </div>
+        </section>
+      </div>
+
       {/* Zig-Zag Sections */}
       {zigzagSections.map((section, index) => (
         <ZigZagSection
@@ -198,7 +214,6 @@ const Index = () => {
           <ContactInfo />
         </div>
       </section>
-
     </Layout>
   );
 };

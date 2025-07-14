@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Heart, Send, Clock, CheckCircle, XCircle, X } from "lucide-react";
 import Layout from "@/components/Layout";
 import Navigation from "@/components/Navigation";
-import { supabase } from "@/lib/supabase";
+import { supabase, type Wish } from "@/lib/supabase";
 import {
   isInCooldown,
   getRemainingCooldownTime,
@@ -18,6 +18,8 @@ const placeholders = [
   "Nekad neaizmirstiet, ka...",
 ];
 
+const LENGTH_THRESHOLD = 200;
+
 const Wishes = () => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -27,9 +29,11 @@ const Wishes = () => {
   const [wishesCount, setWishesCount] = useState(0);
   const [cooldownTime, setCooldownTime] = useState(0);
   const [isInCooldownState, setIsInCooldownState] = useState(false);
+  const [wishes, setWishes] = useState<Wish[]>([]);
+  const [isLoadingWishes, setIsLoadingWishes] = useState(false);
   const [notification, setNotification] = useState<{
     message: string;
-    type: 'success' | 'error';
+    type: "success" | "error";
   } | null>(null);
 
   useEffect(() => {
@@ -44,20 +48,30 @@ const Wishes = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Load wishes count and check cooldown on mount
+  // Load wishes and check cooldown on mount
   useEffect(() => {
-    const loadWishesCount = async () => {
+    const loadWishes = async () => {
+      setIsLoadingWishes(true);
       try {
-        const { count } = await supabase
+        const { data, error, count } = await supabase
           .from("wishes")
-          .select("*", { count: "exact", head: true });
-        setWishesCount(count || 0);
+          .select("*", { count: "exact" })
+          .order("created_at", { ascending: false });
+
+        if (error) {
+          console.error("Error loading wishes:", error);
+        } else {
+          setWishes(data || []);
+          setWishesCount(count || 0);
+        }
       } catch (error) {
-        console.error("Error loading wishes count:", error);
+        console.error("Error loading wishes:", error);
+      } finally {
+        setIsLoadingWishes(false);
       }
     };
 
-    loadWishesCount();
+    loadWishes();
 
     const cooldownCheck = isInCooldown();
     setIsInCooldownState(cooldownCheck);
@@ -113,7 +127,7 @@ const Wishes = () => {
         console.error("Error saving wish:", error);
         setNotification({
           message: "Kļūda saglabājot novēlējumu. Lūdzu mēģiniet vēlreiz.",
-          type: 'error'
+          type: "error",
         });
       } else {
         // Set cooldown
@@ -121,12 +135,19 @@ const Wishes = () => {
         setIsInCooldownState(true);
         setCooldownTime(getRemainingCooldownTime());
 
-        // Update wishes count
+        // Update wishes count and add new wish to local state
         setWishesCount((prev) => prev + 1);
+        const newWish: Wish = {
+          id: Date.now(), // Temporary ID for display
+          name: name.trim() || null,
+          message: message.trim(),
+          created_at: new Date().toISOString(),
+        };
+        setWishes((prev) => [newWish, ...prev]);
 
         setNotification({
           message: "Paldies par novēlējumu! ❤️",
-          type: 'success'
+          type: "success",
         });
         setName("");
         setMessage("");
@@ -135,7 +156,7 @@ const Wishes = () => {
       console.error("Error:", error);
       setNotification({
         message: "Kļūda saglabājot novēlējumu. Lūdzu mēģiniet vēlreiz.",
-        type: 'error'
+        type: "error",
       });
     } finally {
       setIsSubmitting(false);
@@ -145,18 +166,21 @@ const Wishes = () => {
   return (
     <Layout>
       <Navigation />
-      
+
       {/* Notification Toast */}
       {notification && (
         <div className="fixed top-4 right-4 z-50 animate-in slide-in-from-top-2 duration-300">
-          <div className={`
+          <div
+            className={`
             flex items-center space-x-3 px-4 py-3 rounded-lg shadow-lg border max-w-md
-            ${notification.type === 'success' 
-              ? 'bg-green-50 border-green-200 text-green-800' 
-              : 'bg-red-50 border-red-200 text-red-800'
+            ${
+              notification.type === "success"
+                ? "bg-green-50 border-green-200 text-green-800"
+                : "bg-red-50 border-red-200 text-red-800"
             }
-          `}>
-            {notification.type === 'success' ? (
+          `}
+          >
+            {notification.type === "success" ? (
               <CheckCircle size={20} className="text-green-600 shrink-0" />
             ) : (
               <XCircle size={20} className="text-red-600 shrink-0" />
@@ -227,7 +251,10 @@ const Wishes = () => {
             <div className="inline-flex items-center space-x-2 bg-pink-100 text-pink-700 px-4 py-2 rounded-full text-sm font-medium">
               <Heart size={16} className="fill-current" />
               {wishesCount > 0 ? (
-                <span>Jau {wishesCount} {getLatvianPlural(wishesCount, "novēlējums", "novēlējumi")}!</span>
+                <span>
+                  Jau {wishesCount}{" "}
+                  {getLatvianPlural(wishesCount, "novēlējums", "novēlējumi")}!
+                </span>
               ) : (
                 <span>Būsi pirmais?</span>
               )}
@@ -331,7 +358,198 @@ const Wishes = () => {
           </form>
         </div>
       </section>
+
+      {/* Wishes Display Section */}
+      <section className="pb-12 sm:pb-20">
+        <div className="w-full">
+          {isLoadingWishes ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
+            </div>
+          ) : (
+            <div>
+              {/* Short messages - masonry grid */}
+              <div className="masonry-grid">
+                {wishes
+                  .map((wish, index) => ({ wish, index }))
+                  .filter(({ wish }) => wish.message.length <= LENGTH_THRESHOLD)
+                  .map(({ wish, index }) => (
+                    <WatercolorWishCard
+                      key={wish.id}
+                      wish={wish}
+                      index={index}
+                    />
+                  ))}
+              </div>
+
+              {/* Long messages - full width */}
+              {wishes
+                .map((wish, index) => ({ wish, index }))
+                .filter(({ wish }) => wish.message.length > LENGTH_THRESHOLD)
+                .map(({ wish, index }) => (
+                  <WatercolorWishCard key={wish.id} wish={wish} index={index} />
+                ))}
+            </div>
+          )}
+        </div>
+      </section>
     </Layout>
+  );
+};
+
+// Watercolor Wish Card Component
+const WatercolorWishCard = ({ wish, index }: { wish: Wish; index: number }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, index * 150); // Stagger animations
+
+    return () => clearTimeout(timer);
+  }, [index]);
+
+  const isLongMessage = wish.message.length > LENGTH_THRESHOLD;
+
+  // Generate random styling for polaroid/note effect
+  const rotations = [-3, -2, -1, 0, 1, 2, 3, 4, -4, -5, 5];
+  const rotation = isLongMessage ? 0 : rotations[index % rotations.length]; // No rotation for long messages
+  const noteColors = [
+    "bg-yellow-100",
+    "bg-pink-100",
+    "bg-blue-100",
+    "bg-green-100",
+    "bg-purple-100",
+    "bg-orange-100",
+    "bg-red-100",
+    "bg-indigo-100",
+    "bg-gray-100",
+  ];
+  const noteColor = noteColors[index % noteColors.length];
+
+  // Random slight position offset for more natural look (only for short messages)
+  const offsetX = isLongMessage ? 0 : ((index % 3) - 1) * 2; // -2, 0, or 2
+  const offsetY = isLongMessage ? 0 : ((index % 5) - 2) * 1; // -2, -1, 0, 1, or 2
+
+  // If it's a long message, render it differently
+  if (isLongMessage) {
+    return (
+      <div
+        className={`
+          w-full mb-4 transform transition-all duration-700 ease-out
+          ${
+            isVisible
+              ? "translate-y-0 opacity-100 scale-100"
+              : "translate-y-4 opacity-0 scale-95"
+          }
+        `}
+        style={{
+          animationDelay: `${index * 150}ms`,
+          columnSpan: "all",
+        }}
+      >
+        <div
+          className={`
+            relative ${noteColor} rounded-sm p-4 sm:p-6 mx-4 sm:mx-6
+            shadow-lg hover:shadow-xl transition-all duration-300
+            border border-gray-200/50
+            hover:scale-105 hover:z-10
+            bg-gradient-to-br from-white/80 to-transparent
+          `}
+          style={{
+            boxShadow: `
+              0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 2px 4px -1px rgba(0, 0, 0, 0.06),
+              0 0 0 1px rgba(0, 0, 0, 0.02)
+            `,
+          }}
+        >
+          {/* Polaroid/Note tape effect */}
+          <div className="absolute -top-2 left-8 w-8 h-4 bg-yellow-200/60 rounded-sm transform rotate-12 shadow-sm"></div>
+          <div className="absolute -top-2 right-8 w-6 h-4 bg-yellow-200/60 rounded-sm transform -rotate-12 shadow-sm"></div>
+
+          {/* Subtle paper texture */}
+          <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-gray-400 via-transparent to-gray-300 rounded-sm"></div>
+
+          {/* Card content */}
+          <div className="relative z-10">
+            {/* Message */}
+            <div className="mb-4">
+              <p className="text-stone-700 text-sm sm:text-base leading-relaxed font-light handwriting">
+                {wish.message}
+              </p>
+            </div>
+
+            {/* Name */}
+            <div className="text-xs sm:text-sm text-stone-500 border-t border-gray-200/50 pt-2">
+              <div className="flex items-center space-x-2">
+                <Heart size={12} className="text-pink-400 fill-current" />
+                <span className="font-medium">{wish.name || "Anonīms"}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`
+        masonry-item transform transition-all duration-700 ease-out
+        ${
+          isVisible
+            ? "translate-y-0 opacity-100 scale-100"
+            : "translate-y-4 opacity-0 scale-95"
+        }
+      `}
+      style={{
+        animationDelay: `${index * 150}ms`,
+        transform: `rotate(${rotation}deg) translateX(${offsetX}px) translateY(${offsetY}px)`,
+      }}
+    >
+      <div
+        className={`
+          relative ${noteColor} rounded-sm p-4 sm:p-6 
+          shadow-lg hover:shadow-xl transition-all duration-300
+          border border-gray-200/50
+          hover:scale-105 hover:z-10
+          bg-gradient-to-br from-white/80 to-transparent
+        `}
+        style={{
+          boxShadow: `
+            0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06),
+            0 0 0 1px rgba(0, 0, 0, 0.02)
+          `,
+        }}
+      >
+        {/* Polaroid/Note tape effect */}
+        <div className="absolute -top-2 left-4 w-8 h-4 bg-yellow-200/60 rounded-sm transform rotate-12 shadow-sm"></div>
+        <div className="absolute -top-2 right-6 w-6 h-4 bg-yellow-200/60 rounded-sm transform -rotate-12 shadow-sm"></div>
+
+        {/* Subtle paper texture */}
+        <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-gray-400 via-transparent to-gray-300 rounded-sm"></div>
+
+        {/* Card content */}
+        <div className="relative z-10">
+          {/* Message */}
+          <div className="mb-4">
+            <p className="text-stone-700 text-sm sm:text-base leading-relaxed font-light handwriting">
+              {wish.message}
+            </p>
+          </div>
+
+          {/* Name and Date */}
+          <div className="flex justify-between items-end text-xs sm:text-sm text-stone-500 border-t border-gray-200/50 pt-2">
+            <div className="flex items-center space-x-2">
+              <Heart size={12} className="text-pink-400 fill-current" />
+              <span className="font-medium">{wish.name || "Anonīms"}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

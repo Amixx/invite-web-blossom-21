@@ -83,7 +83,7 @@ const Navigation = ({
       id: "wishes",
       label: "Novēlējumi",
       icon: MessageSquare,
-      action: () => navigate("/wishes"),
+      action: () => navigate("/novelejumi"),
     },
     {
       id: "contact",
