@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, MapPin, Gift } from "lucide-react";
+import { Phone, House, Gift, Church } from "lucide-react";
 
 const ContactInfo = () => {
   const contacts = [
@@ -13,6 +13,16 @@ const ContactInfo = () => {
       title: "Agnese",
       phone: "28 752 157",
       role: "Līgava",
+    },
+    {
+      title: "Ingemārs",
+      phone: "28 345 046",
+      role: "Vedējs",
+    },
+    {
+      title: "Katrīna",
+      phone: "22 372 218",
+      role: "Vedēja",
     },
   ];
 
@@ -49,9 +59,9 @@ const ContactInfo = () => {
       <div className="grid md:grid-cols-2 gap-8">
         <Card className="shadow-lg border-green-200">
           <CardContent className="p-8 text-center">
-            <MapPin className="mx-auto mb-4 text-green-500" size={48} />
+            <Church className="mx-auto mb-4 text-green-500" size={48} />
             <h3 className="text-2xl font-medium text-stone-700 mb-4">
-              Vietas informācija
+              Ceremonijas informācija
             </h3>
             <p className="text-stone-600 mb-4">
               Rīgas Svētā Pāvila Baznīca
@@ -76,20 +86,28 @@ const ContactInfo = () => {
 
         <Card className="shadow-lg border-pink-200">
           <CardContent className="p-8 text-center">
-            <Gift className="mx-auto mb-4 text-pink-500" size={48} />
+            <House className="mx-auto mb-4 text-pink-500" size={48} />
             <h3 className="text-2xl font-medium text-stone-700 mb-4">
-              Dāvanu Saraksts
+              Viesu nama informācija
             </h3>
             <p className="text-stone-600 mb-4">
-              Jūsu klātbūtne ir mums vissvarīgākā dāvana!
+              Bille
               <br />
-              Ja tomēr vēlaties mūs iepriecināt ar kaut ko īpašu...
+              Drabešu pagasts
+              <br />
+              Cēsu novads, LV-4139
             </p>
             <Button
               variant="outline"
-              className="border-pink-500 text-pink-600 hover:bg-pink-50"
+              className="border-pink-500 text-pink-500 hover:bg-pink-50"
+              onClick={() =>
+                window.open(
+                  "https://maps.app.goo.gl/PqEoCVAmFrbLUFvY8",
+                  "_blank"
+                )
+              }
             >
-              Skatīt vēlmes
+              Skatīt kartē
             </Button>
           </CardContent>
         </Card>
@@ -102,10 +120,14 @@ const ContactInfo = () => {
               Svarīga informācija
             </h3>
             <div className="text-stone-600 space-y-2">
-              <p>🕒 Lūdzam ierasties baznīcā līdz plkst. 14:45</p>
+              <p>
+                🕒 Lūdzam ierasties baznīcā līdz <strong>plkst. 12:45</strong>
+              </p>
               <p>📱 Ceremonijas laikā lūdzam izslēgt tālruņus</p>
               <p>📸 Fotogrāfēšana un filmēšana ir atļauta</p>
-              <p>🌸 Apģērba kods: eleganti svētku tērpi</p>
+              <p>
+                🌸 Ieteicamais dreskods: <strong>pasteļtonis</strong>
+              </p>
             </div>
           </CardContent>
         </Card>

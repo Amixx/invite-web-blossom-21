@@ -2,12 +2,15 @@ import { useState } from "react";
 import {
   Calendar,
   Heart,
-  Gift,
+  Clock,
   Mail,
   MessageSquare,
   ArrowLeft,
   Menu,
   X,
+  Image,
+  Bed,
+  House,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -56,12 +59,6 @@ const Navigation = ({
       action: () => scrollToSection("home"),
     },
     {
-      id: "story",
-      label: "Stāsts",
-      icon: Heart,
-      action: () => scrollToSection("story"),
-    },
-    {
       id: "ceremony",
       label: "Ceremonija",
       icon: Calendar,
@@ -70,13 +67,25 @@ const Navigation = ({
     {
       id: "afterparty",
       label: "Svinības",
-      icon: Gift,
+      icon: House,
       action: () => scrollToSection("afterparty"),
+    },
+    {
+      id: "dienas-plans",
+      label: "Dienas plāns",
+      icon: Clock,
+      action: () => scrollToSection("dienas-plans"),
+    },
+    {
+      id: "sleeping",
+      label: "Naktsmītnes",
+      icon: Bed,
+      action: () => scrollToSection("sleeping"),
     },
     {
       id: "gallery",
       label: "Galerija",
-      icon: Gift,
+      icon: Image,
       action: () => scrollToSection("gallery"),
     },
     {
@@ -175,7 +184,7 @@ const Navigation = ({
                     onClick={() =>
                       handleItemClick({ id, label, icon: Icon, action })
                     }
-                    className="flex flex-col items-center space-y-3 p-6 bg-white/50 rounded-xl border border-white/60 hover:bg-white/60 hover:border-white/80 transition-all duration-300 shadow-lg backdrop-blur-md"
+                    className="flex flex-col items-center space-y-3 p-6 bg-white rounded-xl border border-white/60 hover:bg-white/60 hover:border-white/80 transition-all duration-300 shadow-lg backdrop-blur-md"
                   >
                     <Icon size={24} className="text-pink-500" />
                     <span className="text-sm font-medium text-stone-700">

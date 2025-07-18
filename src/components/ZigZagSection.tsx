@@ -12,7 +12,7 @@ const ZigZagSection = ({
   title: string;
   content: React.ReactNode;
   image: string;
-  position: "left" | "right";
+  position: string;
   index: number;
 }) => {
   const isEven = index % 2 === 0;
