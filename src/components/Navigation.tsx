@@ -13,6 +13,7 @@ import {
   House,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export type NavItem = {
   id: string;
@@ -33,19 +34,29 @@ const Navigation = ({
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   const isHomePage = location.pathname === "/";
 
   const scrollToSection = (section: string) => {
+    const scrollToSectionWithOffset = (elementId: string) => {
+      const element = document.getElementById(elementId);
+      if (element) {
+        const headerHeight = isMobile ? 56 : 52;
+        const elementPosition = element.offsetTop;
+        const offsetPosition = elementPosition - headerHeight;
+
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+      }
+    };
+
     if (isHomePage) {
-      document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
+      scrollToSectionWithOffset(section);
     } else {
       // Navigate to home page first, then scroll to section
       navigate("/");
       setTimeout(() => {
-        document
-          .getElementById(section)
-          ?.scrollIntoView({ behavior: "smooth" });
+        scrollToSectionWithOffset(section);
       }, 100);
     }
     setIsOpen(false);
