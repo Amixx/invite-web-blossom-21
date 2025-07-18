@@ -223,7 +223,7 @@ All colors MUST be HSL.
 
   /* Handwriting-like font effect */
   .handwriting {
-    font-family: "Segoe Print", "Bradley Hand", "Brush Script MT", cursive;
+    font-family: "Kalam", "Segoe Print", "Bradley Hand", "Brush Script MT", cursive;
     font-weight: 400;
     letter-spacing: 0.02em;
   }
