@@ -11,6 +11,7 @@ import {
   Image,
   Bed,
   House,
+  Camera
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -68,6 +69,12 @@ const Navigation = ({
       label: "Sākums",
       icon: Heart,
       action: () => scrollToSection("home"),
+    },
+    {
+      id: "bildes",
+      label: "Bildes",
+      icon: Camera,
+      action: () => scrollToSection("bildes")
     },
     {
       id: "ceremony",

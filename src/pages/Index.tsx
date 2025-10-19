@@ -7,8 +7,42 @@ import ZigZagSection from "@/components/ZigZagSection";
 import Layout from "@/components/Layout";
 import Navigation from "@/components/Navigation";
 import SleepingArrangements from "@/components/SleepingArrangements";
+import Gallery from "@/components/Gallery";
 
 const Index = () => {
+  const photos = [
+    {
+      src: "/trami-to-be-48.jpg",
+      alt: "Romantic moment",
+      caption: "Mūsu pirmā tikšanās",
+    },
+    {
+      src: "/trami-to-be-57.jpg",
+      alt: "Beautiful landscape",
+      caption: "Kopīgi ceļojumi",
+    },
+    {
+      src: "/trami-to-be-70.jpg",
+      alt: "Nature scene",
+      caption: "Mierīgi brīži dabā",
+    },
+    {
+      src: "/trami-to-be-78.jpg",
+      alt: "Architecture",
+      caption: "Kopīgas aizraušanās",
+    },
+    {
+      src: "/trami-to-be-95.jpg",
+      alt: "Peaceful water",
+      caption: "Mūsu sapņu vieta",
+    },
+    {
+      src: "/trami-to-be-106.jpg",
+      alt: "Peaceful water",
+      caption: "Mūsu sapņu vieta",
+    },
+  ];
+
   const zigzagSections = [
     {
       id: "ceremony",
@@ -129,6 +163,19 @@ const Index = () => {
             >
               Uz novēlējumiem
             </a>
+          </div>
+        </section>
+      </div>
+
+      <div>
+        <section id="bildes" className="py-8 sm:py-20 px-2 sm:px-4 bg-gradient-to-b from-pink-50 to-yellow-50 font-serif">
+           <div className="container mx-auto max-w-6xl text-center">
+            <h2 className="text-3xl sm:text-4xl font-light text-stone-700 mb-6 sm:mb-8 tracking-wide">
+              Bildes
+            </h2>
+            <div className="space-y-12 p-6">
+              <Gallery />
+            </div>
           </div>
         </section>
       </div>
