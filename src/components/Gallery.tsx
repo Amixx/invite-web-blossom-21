@@ -62,7 +62,7 @@ const Gallery = () => {
             >
               <h2 className="text-2xl font-semibold capitalize">{section}</h2>
               <span className="text-blue-500 font-medium">
-                {isExpanded ? "Collapse ▲" : "View All ▼"}
+                {isExpanded ? "Rādīt mazāk ▲" : "Rādīt visus ▼"}
               </span>
             </div>
 

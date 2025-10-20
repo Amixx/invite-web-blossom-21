@@ -1,4 +1,4 @@
-import { Heart } from "lucide-react";
+import { Heart, Instagram, Trees } from "lucide-react";
 import PhotoGallery from "@/components/PhotoGallery";
 import ContactInfo from "@/components/ContactInfo";
 import CountdownTimer from "@/components/CountdownTimer";
@@ -175,6 +175,24 @@ const Index = () => {
             </h2>
             <div className="space-y-12 p-6">
               <Gallery />
+            </div>
+              <div className="w-full mt-5 flex flex-col sm:flex-row items-center justify-center gap-12 font-semibold text-2xl align-middle">
+                <img
+                  src="bildes/random/IMG_8151.jpeg"
+                  alt="Svarupi Foto | Video"
+                  className="max-w-[250px] md:max-w-[450px] rounded-xl shadow-md break-inside-avoid cursor-pointer hover:scale-105 transition-transform"
+                  />
+                <ul>
+                  <li className="mb-5">Liels paldies mūsu fotogrāfiem par skaistāko dzīves momentu iemūžināšanu!</li>
+                  <li className="flex align-middle items-center justify-center gap-3 ">
+                    <div className="grid grid-rows-2 grid-cols-2 text-xl font-medium">
+                      <span className="text-right border-r-2 border-[#020817] px-2">Dita Svarupa-Robalde</span>
+                      <span className="text-left px-2">Artis Robalds</span>
+                      <a href="https://www.instagram.com/svarupafoto/" className="flex flex-row items-center gap-2 align-middle justify-end border-r-2 border-[#020817] px-2 hover:underline"><Instagram /> Svarupi Foto</a>
+                      <a href="https://manaogre.lv/" className="text-left flex items-center gap-2 flex-row align-middle px-2 hover:underline"><Trees /> www.manaogre.lv</a>
+                    </div>
+                  </li>
+                </ul>
             </div>
           </div>
         </section>
